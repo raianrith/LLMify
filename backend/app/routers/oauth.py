@@ -47,7 +47,7 @@ async def google_login():
     
     params = {
         "client_id": settings.google_client_id,
-        "redirect_uri": f"{settings.oauth_redirect_base_url}/api/oauth/google/callback",
+        "redirect_uri": f"{settings.backend_url}/api/oauth/google/callback",
         "response_type": "code",
         "scope": "openid email profile",
         "state": state,
@@ -76,7 +76,7 @@ async def google_callback(code: str, state: str, db: Session = Depends(get_db)):
                 "client_secret": settings.google_client_secret,
                 "code": code,
                 "grant_type": "authorization_code",
-                "redirect_uri": f"{settings.oauth_redirect_base_url}/api/oauth/google/callback"
+                "redirect_uri": f"{settings.backend_url}/api/oauth/google/callback"
             }
         )
         
@@ -112,12 +112,12 @@ async def google_callback(code: str, state: str, db: Session = Depends(get_db)):
             "provider": "google",
             "error": "no_account"
         })
-        return RedirectResponse(url=f"{settings.oauth_redirect_base_url}/signup?{params}")
+        return RedirectResponse(url=f"{settings.frontend_url}/signup?{params}")
     
     # Create JWT token
     jwt_token = create_access_token(data={"sub": user.username})
     
     # Redirect to frontend with token
     return RedirectResponse(
-        url=f"{settings.oauth_redirect_base_url}/oauth/callback?token={jwt_token}&provider=google"
+        url=f"{settings.frontend_url}/oauth/callback?token={jwt_token}&provider=google"
     )

@@ -29,7 +29,8 @@ class Settings(BaseSettings):
     # OAuth Settings (Google)
     google_client_id: str = ""
     google_client_secret: str = ""
-    oauth_redirect_base_url: str = "http://localhost:3000"  # Frontend URL
+    backend_url: str = "http://localhost:8000"  # Backend URL for OAuth callback
+    frontend_url: str = "http://localhost:3000"  # Frontend URL for redirects
     
     # Application
     app_name: str = "LLM Search Visibility Tool"
