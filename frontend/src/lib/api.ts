@@ -2,7 +2,7 @@
  * API client for the LLM Search Visibility backend
  */
 
-const API_BASE = '/api';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || '/api';
 
 // Get token from localStorage
 const getToken = (): string | null => {

@@ -375,17 +375,60 @@ db.commit()
 
 ## 🚀 Deployment
 
+### Architecture Overview
+
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│   Vercel        │────▶│   Railway       │────▶│   Supabase      │
+│   (Frontend)    │     │   (Backend)     │     │   (PostgreSQL)  │
+│   Next.js       │     │   FastAPI       │     │   Database      │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+```
+
+### Step 1: Deploy Backend to Railway
+
+1. Go to [railway.app](https://railway.app) and sign in with GitHub
+2. Click **New Project** → **Deploy from GitHub repo**
+3. Select your repository and choose the `backend` directory
+4. Add environment variables:
+   ```
+   DATABASE_URL=postgresql://...  (your Supabase URL)
+   SECRET_KEY=generate-a-secure-random-string
+   OPENAI_API_KEY=sk-...
+   GEMINI_API_KEY=AI...
+   PERPLEXITY_API_KEY=pplx-...
+   FRONTEND_URL=https://your-app.vercel.app
+   OAUTH_REDIRECT_BASE_URL=https://your-app.vercel.app
+   ```
+5. Railway will auto-detect Python and deploy
+6. Note your backend URL (e.g., `https://llmify-api.up.railway.app`)
+
+### Step 2: Deploy Frontend to Vercel
+
+1. Go to [vercel.com](https://vercel.com) and sign in with GitHub
+2. Click **Add New** → **Project**
+3. Import your repository
+4. Set **Root Directory** to `frontend`
+5. Add environment variable:
+   ```
+   NEXT_PUBLIC_API_URL=https://your-railway-url.up.railway.app/api
+   ```
+6. Deploy!
+
+### Step 3: Update OAuth Redirect URIs
+
+If using Google OAuth, update your Google Cloud Console:
+- Add redirect URI: `https://your-vercel-url.vercel.app/api/oauth/google/callback`
+
 ### Production Checklist
 
-- [ ] Switch to PostgreSQL database
-- [ ] Generate secure `SECRET_KEY`
-- [ ] Update CORS origins in `main.py`
-- [ ] Enable HTTPS
-- [ ] Set up rate limiting
-- [ ] Configure proper logging
-- [ ] Set up monitoring/alerting
+- [x] PostgreSQL database (Supabase)
+- [x] CORS configured for Vercel domains
+- [ ] Generate secure `SECRET_KEY` (use: `openssl rand -hex 32`)
+- [ ] Update Google OAuth redirect URIs
+- [ ] Test all functionality end-to-end
 
-### Docker Deployment
+### Alternative: Docker Deployment
 
 ```yaml
 version: '3.8'
@@ -403,6 +446,8 @@ services:
     build: ./frontend
     ports:
       - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000/api
     depends_on:
       - backend
 
