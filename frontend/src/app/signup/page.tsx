@@ -19,6 +19,8 @@ import {
   EyeOff,
 } from 'lucide-react';
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || '/api';
+
 interface Competitor {
   name: string;
   website: string;
@@ -200,7 +202,7 @@ export default function SignupPage() {
     setError('');
 
     try {
-      const response = await fetch('/api/signup/', {
+      const response = await fetch(`${API_BASE}/signup/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
