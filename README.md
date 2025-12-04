@@ -1,233 +1,167 @@
-# LLM Search Visibility Tool - Full Stack Application
+# LLMify - AI Engine Optimization Platform
 
-A multi-tenant full-stack application for tracking brand visibility across AI platforms (ChatGPT, Gemini, Perplexity). Built with FastAPI backend and Next.js frontend.
+<div align="center">
 
-## Features
+![LLMify Logo](https://img.shields.io/badge/LLMify-AI%20Engine%20Optimization-8b5cf6?style=for-the-badge&logo=sparkles)
 
-- **Multi-Client Support**: Each client (Kaysun, Weidert, etc.) has their own login and data
-- **User Authentication**: JWT-based authentication with role-based access
-- **Multi-LLM Query Generator**: Run queries across OpenAI, Gemini, and Perplexity
-- **Search Visibility Analysis**: Track mention rates, positions, and sentiment
-- **Competitor Comparison**: Head-to-head analysis with competitors
-- **Gap Analysis**: Identify opportunities and critical gaps
-- **Time-Series Dashboard**: Track visibility trends over time
-- **Database Storage**: SQLite database (easily upgradeable to PostgreSQL)
+**The new ~~SEO~~ AEO starts here.**
 
-## Tech Stack
+Track your brand's visibility across AI platforms like ChatGPT, Gemini, Claude, and Perplexity.
+
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+
+</div>
+
+---
+
+## 🚀 Features
+
+### Core Functionality
+- **Multi-LLM Query Generator** - Run queries across OpenAI GPT-4, Google Gemini, and Perplexity simultaneously
+- **Brand Visibility Tracking** - Monitor mention rates, positioning, and sentiment across AI responses
+- **Competitor Analysis** - Head-to-head comparison with competitors
+- **Gap Analysis** - Identify missed opportunities and critical visibility gaps
+- **Time-Series Trends** - Track visibility changes over time with interactive charts
+- **Citation Analysis** - Track which URLs and domains are cited in AI responses
+
+### Multi-Tenant Architecture
+- **Self-Service Signup** - New companies can onboard themselves with a guided wizard
+- **Client Isolation** - Each company has their own data, users, and settings
+- **Role-Based Access** - Admin and user roles per client
+- **Brand Customization** - Dynamic primary color theming per client
+
+### Authentication & Security
+- **JWT Authentication** - Secure token-based auth
+- **Google OAuth** - Single sign-on with Google accounts
+- **Password Hashing** - Bcrypt password security
+- **Session Management** - Automatic token refresh and logout
+
+### Admin Portal (Superadmin)
+- **Client Management** - View and manage all registered companies
+- **User Overview** - See all users across the platform
+- **API Usage Tracking** - Monitor LLM API costs per client
+- **Activity Logs** - Audit trail of user actions
+
+### Advanced Analytics
+- **Branded vs Non-Branded Queries** - Filter analysis by query type
+- **Brand Aliases** - Track multiple name variations (e.g., "Kaysun", "Kaysun Corp", "Kaysun Corporation")
+- **Competitor Aliases** - Track competitor name variations
+- **Position Analysis** - Track where brand appears (first third, middle, last third)
+- **Sentiment Analysis** - NLP-powered context classification
+
+---
+
+## 🛠 Tech Stack
 
 ### Backend
-- **FastAPI** - Modern Python web framework
-- **SQLAlchemy** - Database ORM
-- **SQLite** - Database (can upgrade to PostgreSQL)
-- **JWT** - Authentication tokens
-- **NLTK** - Natural language processing for sentiment analysis
+| Technology | Purpose |
+|------------|---------|
+| **FastAPI** | Modern async Python web framework |
+| **SQLAlchemy** | Database ORM with async support |
+| **PostgreSQL / SQLite** | Database (cloud or local) |
+| **Pydantic** | Data validation and serialization |
+| **JWT (python-jose)** | Token-based authentication |
+| **NLTK** | Natural language processing |
+| **httpx** | Async HTTP client for OAuth |
 
 ### Frontend
-- **Next.js 14** - React framework with App Router
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
-- **Recharts** - Data visualization
-- **Lucide Icons** - Beautiful icons
+| Technology | Purpose |
+|------------|---------|
+| **Next.js 14** | React framework with App Router |
+| **TypeScript** | Type-safe JavaScript |
+| **Tailwind CSS** | Utility-first styling |
+| **Recharts** | Data visualization |
+| **Lucide Icons** | Modern icon library |
 
-## Quick Start
+### LLM Integrations
+| Provider | Models Supported |
+|----------|------------------|
+| **OpenAI** | GPT-4o, GPT-4, GPT-3.5 Turbo |
+| **Google** | Gemini 2.0 Flash, Gemini 1.5 Pro |
+| **Perplexity** | Sonar, Sonar Pro |
+
+### Cloud Services (Optional)
+- **Supabase** - PostgreSQL database hosting
+- **Google Cloud** - OAuth authentication
+
+---
+
+## 📦 Installation
 
 ### Prerequisites
 - Python 3.9+
 - Node.js 18+
 - npm or yarn
 
-### 1. Clone and Setup
+### 1. Clone the Repository
 
 ```bash
-cd fullstack-app
+git clone https://github.com/raianrith/LLMify.git
+cd LLMify
 ```
 
 ### 2. Backend Setup
 
 ```bash
-# Navigate to backend directory
 cd backend
 
 # Create virtual environment
 python -m venv venv
 
 # Activate virtual environment
-# On macOS/Linux:
-source venv/bin/activate
-# On Windows:
-# venv\Scripts\activate
+source venv/bin/activate  # macOS/Linux
+# venv\Scripts\activate   # Windows
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Create .env file from example
+# Create environment file
 cp env.example .env
 
-# Edit .env and add your API keys:
-# OPENAI_API_KEY=your-openai-key
-# GEMINI_API_KEY=your-gemini-key
-# PERPLEXITY_API_KEY=your-perplexity-key
+# Edit .env with your API keys (see Configuration section)
 
-# Initialize database with seed data
+# Seed the database
 python seed_data.py
 
-# Start the backend server
+# Start the server
 uvicorn app.main:app --reload --port 8000
 ```
 
 ### 3. Frontend Setup
 
 ```bash
-# In a new terminal, navigate to frontend directory
 cd frontend
 
 # Install dependencies
 npm install
 
-# Start the development server
+# Start development server
 npm run dev
 ```
 
 ### 4. Access the Application
 
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8000
-- **API Docs**: http://localhost:8000/api/docs
+| URL | Description |
+|-----|-------------|
+| http://localhost:3000 | Frontend application |
+| http://localhost:8000 | Backend API |
+| http://localhost:8000/api/docs | Swagger API documentation |
 
-### 5. OAuth Setup (Optional - Google Login)
+---
 
-To enable Google single sign-on:
+## ⚙️ Configuration
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
-2. Create a new project or select existing
-3. Go to "APIs & Services" → "Credentials"
-4. Click "Create Credentials" → "OAuth 2.0 Client IDs"
-5. Configure the consent screen if prompted
-6. Select "Web application"
-7. Add authorized redirect URI: `http://localhost:3000/api/oauth/google/callback`
-8. Copy Client ID and Client Secret to your `.env`:
-   ```
-   GOOGLE_CLIENT_ID=your-client-id
-   GOOGLE_CLIENT_SECRET=your-client-secret
-   ```
-
-⚠️ **Note**: OAuth login requires users to have an existing account with a matching email. Users signing in via OAuth for the first time will be redirected to the signup page.
-
-### 6. Cloud Database Setup (Optional - PostgreSQL)
-
-By default, the app uses SQLite (local file). For production or multi-user scenarios, use a cloud PostgreSQL database:
-
-#### Option A: Supabase (Recommended - Free)
-1. Create account at [supabase.com](https://supabase.com)
-2. Create a new project
-3. Go to **Settings** → **Database** → **Connection string** → **URI**
-4. Update your `.env`:
-   ```
-   DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@db.YOUR_PROJECT.supabase.co:5432/postgres
-   ```
-
-#### Option B: Neon (Serverless PostgreSQL)
-1. Create account at [neon.tech](https://neon.tech)
-2. Create a project
-3. Copy the connection string to your `.env`
-
-#### Option C: Railway
-1. Create account at [railway.app](https://railway.app)
-2. Add PostgreSQL plugin
-3. Copy the `DATABASE_URL` to your `.env`
-
-After updating the database URL, restart the backend and it will auto-create the tables.
-
-### Default Login Credentials
-
-| Client | Username | Password |
-|--------|----------|----------|
-| Admin | superadmin | admin123 |
-| Kaysun | kaysun_admin | kaysun123 |
-| Kaysun User | kaysun_user | kaysun123 |
-| Weidert | weidert_admin | weidert123 |
-
-## Project Structure
-
-```
-fullstack-app/
-├── backend/
-│   ├── app/
-│   │   ├── __init__.py
-│   │   ├── main.py           # FastAPI application
-│   │   ├── config.py         # Configuration settings
-│   │   ├── database.py       # Database setup
-│   │   ├── models.py         # SQLAlchemy models
-│   │   ├── schemas.py        # Pydantic schemas
-│   │   ├── auth.py           # Authentication utilities
-│   │   ├── llm_service.py    # LLM API integrations
-│   │   └── routers/
-│   │       ├── auth.py       # Auth endpoints
-│   │       ├── clients.py    # Client management
-│   │       ├── queries.py    # Query execution
-│   │       └── analysis.py   # Analysis endpoints
-│   ├── seed_data.py          # Database seeding
-│   ├── requirements.txt
-│   └── env.example
-├── frontend/
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── page.tsx              # Root redirect
-│   │   │   ├── login/page.tsx        # Login page
-│   │   │   └── dashboard/
-│   │   │       ├── layout.tsx        # Dashboard layout
-│   │   │       ├── page.tsx          # Dashboard home
-│   │   │       ├── generator/        # Query generator
-│   │   │       ├── analysis/         # Visibility analysis
-│   │   │       ├── competitors/      # Competitor comparison
-│   │   │       ├── gaps/             # Gap analysis
-│   │   │       ├── trends/           # Time-series dashboard
-│   │   │       └── settings/         # Settings page
-│   │   ├── components/
-│   │   │   └── DashboardLayout.tsx   # Shared dashboard layout
-│   │   └── lib/
-│   │       ├── api.ts                # API client
-│   │       └── auth.tsx              # Auth context
-│   ├── package.json
-│   └── tailwind.config.js
-└── README.md
-```
-
-## API Endpoints
-
-### Authentication
-- `POST /api/auth/login` - Login with form data
-- `POST /api/auth/login/json` - Login with JSON body
-- `GET /api/auth/me` - Get current user info
-
-### Clients
-- `GET /api/clients/current` - Get current client
-- `GET /api/clients/{id}/competitors` - List competitors
-- `GET /api/clients/{id}/queries` - List predefined queries
-
-### Queries
-- `POST /api/queries/run` - Run custom queries
-- `POST /api/queries/run-predefined` - Run predefined queries
-- `GET /api/queries/runs` - List query runs
-- `GET /api/queries/runs/{id}` - Get query run details
-- `GET /api/queries/runs/{id}/status` - Get run status
-
-### Analysis
-- `GET /api/analysis/runs/{id}/summary` - Get analysis summary
-- `GET /api/analysis/runs/{id}/gaps` - Get gap analysis
-- `GET /api/analysis/runs/{id}/competitors` - Get competitor analysis
-- `GET /api/analysis/time-series` - Get time-series data
-- `GET /api/analysis/dashboard-stats` - Get dashboard statistics
-
-## Configuration
-
-### Environment Variables (Backend)
+### Environment Variables
 
 Create a `.env` file in the `backend` directory:
 
 ```env
 # Database
 DATABASE_URL=sqlite:///./llm_visibility.db
+# For PostgreSQL: postgresql://user:password@host:5432/database
 
 # JWT Configuration
 SECRET_KEY=your-super-secret-key-change-in-production
@@ -235,42 +169,200 @@ ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=1440
 
 # LLM API Keys
-OPENAI_API_KEY=your-openai-api-key
-GEMINI_API_KEY=your-gemini-api-key
-PERPLEXITY_API_KEY=your-perplexity-api-key
+OPENAI_API_KEY=sk-...
+GEMINI_API_KEY=AI...
+PERPLEXITY_API_KEY=pplx-...
+
+# Google OAuth (Optional)
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+OAUTH_REDIRECT_BASE_URL=http://localhost:3000
 ```
 
-### Adding a New Client
+### Google OAuth Setup (Optional)
 
-1. Use the API or seed script to create a new client
-2. Add competitors specific to that client
-3. Add predefined queries relevant to their industry
-4. Create user accounts for the client
+1. Go to [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+2. Create or select a project
+3. Navigate to **APIs & Services** → **Credentials**
+4. Click **Create Credentials** → **OAuth 2.0 Client IDs**
+5. Select **Web application**
+6. Add redirect URI: `http://localhost:3000/api/oauth/google/callback`
+7. Copy credentials to `.env`
 
-Example using Python:
+### Cloud Database Setup (Optional)
+
+#### Supabase (Recommended)
+1. Create account at [supabase.com](https://supabase.com)
+2. Create a new project
+3. Go to **Settings** → **Database** → **Connection string**
+4. Copy the URI and update `DATABASE_URL` in `.env`
+
+**Note:** If your password contains special characters like `@`, URL-encode them (e.g., `@` → `%40`)
+
+---
+
+## 👤 Default Credentials
+
+| Role | Username | Password |
+|------|----------|----------|
+| **Superadmin** | superadmin | admin123 |
+| **Kaysun Admin** | kaysun_admin | kaysun123 |
+| **Kaysun User** | kaysun_user | kaysun123 |
+| **Weidert Admin** | weidert_admin | weidert123 |
+
+---
+
+## 📁 Project Structure
+
+```
+LLMify/
+├── backend/
+│   ├── app/
+│   │   ├── main.py              # FastAPI application entry
+│   │   ├── config.py            # Settings & configuration
+│   │   ├── database.py          # Database connection
+│   │   ├── models.py            # SQLAlchemy models
+│   │   ├── schemas.py           # Pydantic schemas
+│   │   ├── auth.py              # Authentication utilities
+│   │   ├── llm_service.py       # LLM API integrations
+│   │   ├── logging_utils.py     # Activity & API logging
+│   │   └── routers/
+│   │       ├── auth.py          # Login, logout, user info
+│   │       ├── oauth.py         # Google OAuth
+│   │       ├── signup.py        # Self-service registration
+│   │       ├── account.py       # Account management
+│   │       ├── clients.py       # Client CRUD
+│   │       ├── queries.py       # Query execution
+│   │       ├── analysis.py      # Analytics endpoints
+│   │       └── admin.py         # Admin portal APIs
+│   ├── seed_data.py             # Database seeding script
+│   ├── requirements.txt         # Python dependencies
+│   └── env.example              # Environment template
+│
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── login/           # Login page with OAuth
+│   │   │   ├── signup/          # Multi-step signup wizard
+│   │   │   ├── oauth/callback/  # OAuth callback handler
+│   │   │   ├── dashboard/       # Main application
+│   │   │   │   ├── page.tsx           # Dashboard overview
+│   │   │   │   ├── generator/         # Query generator
+│   │   │   │   ├── analysis/          # Visibility analysis
+│   │   │   │   ├── competitors/       # Competitor comparison
+│   │   │   │   ├── gaps/              # Gap analysis
+│   │   │   │   ├── trends/            # Time series charts
+│   │   │   │   └── settings/          # Client settings
+│   │   │   └── admin/           # Admin portal
+│   │   │       ├── page.tsx           # Admin dashboard
+│   │   │       ├── clients/           # Client management
+│   │   │       ├── users/             # User management
+│   │   │       ├── costs/             # API usage & costs
+│   │   │       └── activity/          # Activity logs
+│   │   ├── components/
+│   │   │   └── DashboardLayout.tsx    # Shared layout
+│   │   └── lib/
+│   │       ├── api.ts           # API client functions
+│   │       └── auth.tsx         # Auth context
+│   ├── package.json
+│   └── tailwind.config.js
+│
+└── README.md
+```
+
+---
+
+## 🔌 API Endpoints
+
+### Authentication
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/login` | Login (form data) |
+| POST | `/api/auth/login/json` | Login (JSON) |
+| GET | `/api/auth/me` | Get current user |
+
+### OAuth
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/oauth/config` | Check OAuth providers |
+| GET | `/api/oauth/google/login` | Initiate Google OAuth |
+| GET | `/api/oauth/google/callback` | Google OAuth callback |
+
+### Signup
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/signup/` | Create new account |
+
+### Clients
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/clients/current` | Get current client |
+| PUT | `/api/clients/{id}` | Update client |
+| GET | `/api/clients/{id}/competitors` | List competitors |
+| POST | `/api/clients/{id}/competitors` | Add competitor |
+
+### Queries
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/queries/run` | Run custom queries |
+| POST | `/api/queries/run-predefined` | Run predefined queries |
+| GET | `/api/queries/runs` | List query runs |
+| GET | `/api/queries/runs/{id}` | Get run details |
+
+### Analysis
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/analysis/runs/{id}/summary` | Analysis summary |
+| GET | `/api/analysis/runs/{id}/gaps` | Gap analysis |
+| GET | `/api/analysis/runs/{id}/competitors` | Competitor analysis |
+| GET | `/api/analysis/runs/{id}/citations` | Citation analysis |
+| GET | `/api/analysis/time-series` | Time series data |
+| GET | `/api/analysis/dashboard-stats` | Dashboard stats |
+
+### Admin (Superadmin only)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/admin/clients` | All clients |
+| GET | `/api/admin/users` | All users |
+| GET | `/api/admin/api-usage` | API usage data |
+| GET | `/api/admin/activity-logs` | Activity logs |
+
+---
+
+## 🎨 Customization
+
+### Client Branding
+
+Each client can customize:
+- **Primary Color** - Applied to navigation, buttons, avatars
+- **Brand Name** - Tracked in LLM responses
+- **Brand Aliases** - Alternative names to track
+
+Settings are available at **Dashboard** → **Settings** → **Client Settings**
+
+### Adding a New Client (Programmatic)
 
 ```python
 from app.database import SessionLocal
-from app.models import Client, User, Competitor
+from app.models import Client, User
 from app.auth import get_password_hash
 
 db = SessionLocal()
 
-# Create client
 client = Client(
-    name="New Company",
-    slug="newcompany",
-    brand_name="NewCo",
-    industry="Technology",
+    name="Acme Corp",
+    slug="acme",
+    brand_name="Acme",
+    brand_aliases="Acme Inc, Acme Corporation",
+    industry="Manufacturing",
     primary_color="#3b82f6"
 )
 db.add(client)
 db.commit()
 
-# Create admin user
 admin = User(
-    email="admin@newcompany.com",
-    username="newco_admin",
+    email="admin@acme.com",
+    username="acme_admin",
     hashed_password=get_password_hash("password123"),
     client_id=client.id,
     is_admin=True
@@ -279,19 +371,21 @@ db.add(admin)
 db.commit()
 ```
 
-## Deployment
+---
 
-### Production Considerations
+## 🚀 Deployment
 
-1. **Database**: Switch from SQLite to PostgreSQL for production
-2. **Secret Key**: Generate a secure random secret key
-3. **CORS**: Update allowed origins in `main.py`
-4. **HTTPS**: Use HTTPS in production
-5. **Rate Limiting**: Add rate limiting for API endpoints
+### Production Checklist
 
-### Docker Deployment (Optional)
+- [ ] Switch to PostgreSQL database
+- [ ] Generate secure `SECRET_KEY`
+- [ ] Update CORS origins in `main.py`
+- [ ] Enable HTTPS
+- [ ] Set up rate limiting
+- [ ] Configure proper logging
+- [ ] Set up monitoring/alerting
 
-Create `docker-compose.yml`:
+### Docker Deployment
 
 ```yaml
 version: '3.8'
@@ -301,7 +395,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://user:pass@db/llm_visibility
+      - DATABASE_URL=postgresql://user:pass@db/llmify
     depends_on:
       - db
 
@@ -315,7 +409,7 @@ services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_DB: llm_visibility
+      POSTGRES_DB: llmify
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
     volumes:
@@ -325,7 +419,24 @@ volumes:
   postgres_data:
 ```
 
-## License
+---
 
-Proprietary - Internal use only.
+## 📄 License
 
+Proprietary - All rights reserved.
+
+---
+
+## 🤝 Contributing
+
+This is a private project. Contact the repository owner for contribution guidelines.
+
+---
+
+<div align="center">
+
+**Built with ❤️ for the future of AI-powered search**
+
+*The new AEO starts here.*
+
+</div>
