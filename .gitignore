@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Environment files (contain secrets)
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+.next/
+dist/
+build/
+*.egg-info/
+
+# Database files (local development)
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+
+# Testing
+coverage/
+.coverage
+htmlcov/
+
+# Misc
+*.bak
+*.tmp
+.cache/
+
