@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Sparkles, CheckCircle2, XCircle, Loader2 } from 'lucide-react';
 import { getCurrentUser } from '@/lib/api';
 
-export default function OAuthCallbackPage() {
+function OAuthCallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
@@ -61,57 +61,83 @@ export default function OAuthCallbackPage() {
   }, [searchParams, router]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-950">
-      <div className="text-center">
-        {/* Logo */}
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center">
-            <Sparkles className="w-7 h-7 text-white" />
-          </div>
-          <span className="text-3xl font-bold text-white">LLMify</span>
+    <div className="text-center">
+      {/* Logo */}
+      <div className="flex items-center justify-center gap-3 mb-8">
+        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center">
+          <Sparkles className="w-7 h-7 text-white" />
         </div>
+        <span className="text-3xl font-bold text-white">LLMify</span>
+      </div>
 
-        {/* Status card */}
-        <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-8 border border-slate-700/50 max-w-md">
-          {status === 'loading' && (
-            <>
-              <div className="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-4">
-                <Loader2 className="w-8 h-8 text-purple-400 animate-spin" />
-              </div>
-              <h2 className="text-xl font-semibold text-white mb-2">Authenticating...</h2>
-              <p className="text-gray-400">{message}</p>
-            </>
-          )}
+      {/* Status card */}
+      <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-8 border border-slate-700/50 max-w-md">
+        {status === 'loading' && (
+          <>
+            <div className="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-4">
+              <Loader2 className="w-8 h-8 text-purple-400 animate-spin" />
+            </div>
+            <h2 className="text-xl font-semibold text-white mb-2">Authenticating...</h2>
+            <p className="text-gray-400">{message}</p>
+          </>
+        )}
 
-          {status === 'success' && (
-            <>
-              <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
-                <CheckCircle2 className="w-8 h-8 text-emerald-400" />
-              </div>
-              <h2 className="text-xl font-semibold text-white mb-2">Success!</h2>
-              <p className="text-gray-400">{message}</p>
-              <p className="text-sm text-gray-500 mt-4">Redirecting to dashboard...</p>
-            </>
-          )}
+        {status === 'success' && (
+          <>
+            <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+            </div>
+            <h2 className="text-xl font-semibold text-white mb-2">Success!</h2>
+            <p className="text-gray-400">{message}</p>
+            <p className="text-sm text-gray-500 mt-4">Redirecting to dashboard...</p>
+          </>
+        )}
 
-          {status === 'error' && (
-            <>
-              <div className="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center mx-auto mb-4">
-                <XCircle className="w-8 h-8 text-red-400" />
-              </div>
-              <h2 className="text-xl font-semibold text-white mb-2">Authentication Failed</h2>
-              <p className="text-gray-400 mb-6">{message}</p>
-              <button
-                onClick={() => router.push('/login')}
-                className="px-6 py-3 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium hover:from-purple-500 hover:to-blue-500 transition-all"
-              >
-                Back to Login
-              </button>
-            </>
-          )}
-        </div>
+        {status === 'error' && (
+          <>
+            <div className="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center mx-auto mb-4">
+              <XCircle className="w-8 h-8 text-red-400" />
+            </div>
+            <h2 className="text-xl font-semibold text-white mb-2">Authentication Failed</h2>
+            <p className="text-gray-400 mb-6">{message}</p>
+            <button
+              onClick={() => router.push('/login')}
+              className="px-6 py-3 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium hover:from-purple-500 hover:to-blue-500 transition-all"
+            >
+              Back to Login
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
 }
 
+function LoadingFallback() {
+  return (
+    <div className="text-center">
+      <div className="flex items-center justify-center gap-3 mb-8">
+        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center">
+          <Sparkles className="w-7 h-7 text-white" />
+        </div>
+        <span className="text-3xl font-bold text-white">LLMify</span>
+      </div>
+      <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-8 border border-slate-700/50 max-w-md">
+        <div className="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-4">
+          <Loader2 className="w-8 h-8 text-purple-400 animate-spin" />
+        </div>
+        <h2 className="text-xl font-semibold text-white mb-2">Loading...</h2>
+      </div>
+    </div>
+  );
+}
+
+export default function OAuthCallbackPage() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-950">
+      <Suspense fallback={<LoadingFallback />}>
+        <OAuthCallbackContent />
+      </Suspense>
+    </div>
+  );
+}
