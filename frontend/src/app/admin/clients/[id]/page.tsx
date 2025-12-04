@@ -183,7 +183,7 @@ export default function ClientDetailsPage() {
                       <div className="flex items-center gap-2">
                         <p className="font-medium text-gray-900">{user.username}</p>
                         {user.is_admin && (
-                          <Shield className="w-3.5 h-3.5 text-amber-600" title="Admin" />
+                          <span title="Admin"><Shield className="w-3.5 h-3.5 text-amber-600" /></span>
                         )}
                       </div>
                       <p className="text-xs text-gray-500 flex items-center gap-1">
