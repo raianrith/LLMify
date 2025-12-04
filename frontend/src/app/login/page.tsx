@@ -586,14 +586,6 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Demo credentials hint */}
-            <div className="mt-6 p-4 rounded-xl bg-slate-800/30 border border-slate-700/50">
-              <p className="text-sm text-gray-400 text-center">
-                <span className="font-medium text-gray-300">Demo credentials:</span><br />
-                <span className="text-purple-400">Admin:</span> superadmin / admin123<br />
-                <span className="text-blue-400">Kaysun:</span> kaysun_admin / kaysun123
-              </p>
-            </div>
           </div>
         </div>
 
