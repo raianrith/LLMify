@@ -553,7 +553,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={handleGoogleLogin}
-                disabled={oauthLoading || !!(oauthConfig && !oauthConfig.google_enabled)}
+                disabled={oauthLoading || (oauthConfig ? !oauthConfig.google_enabled : false)}
                 className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-lg bg-white hover:bg-gray-100 text-gray-800 font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {oauthLoading ? (
